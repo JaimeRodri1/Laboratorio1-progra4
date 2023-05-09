@@ -13,7 +13,7 @@ class labcontroller extends Controller
     {
         //
         $lab = lab::paginate();
-        return view('lab.index')
+        return view('lab.index', compact('lab'))
         ->with('i', (request()->input('page', 1)-1)* $lab->perPage());
     }
 
@@ -54,11 +54,10 @@ class labcontroller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Request $request, string $id)
     {
         //
-        $labD=request();
-        lab::where('id', '=', $id)->update($labD);
+        $labD=request()->except('_token');
         return redirect('lab');
     }
 
